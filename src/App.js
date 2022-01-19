@@ -4,10 +4,11 @@ import { Container, Button, Stack } from "react-bootstrap";
 import ButgetCard from "./components/butgetCard.jsx";
 import AddBudgetModal from "./components/AddBudgetModal.jsx";
 import { useBudgets } from "./contexts/BudgetsContext.jsx";
-
+import AddExpensesModal from "../src/components/AddExpensesModal.jsx";
 function App() {
   const [showThemodalBudget, setShotTheModalBudget] = useState(false);
-  const { budgets } = useBudgets();
+  const { budgets, getBudgetExpenses } = useBudgets();
+  const [showTheModalExpenses, setShowTheModalExpenses] = useState(false);
   return (
     <>
       <Container fluid>
@@ -22,7 +23,9 @@ function App() {
           >
             Add Butget
           </Button>
-          <Button variant="outline-primary">Add Expense</Button>
+          <Button variant="outline-primary" onClick={() => setShowTheModalExpenses(true)}>
+            Add Expense
+          </Button>
         </Stack>
 
         <div
@@ -34,11 +37,15 @@ function App() {
           }}
         >
           {budgets.map((budget) => {
+            const amount = getBudgetExpenses(budget.id).reduce(
+              (acc, expense) => acc + expense.amount,
+              0
+            );
             return (
               <ButgetCard
                 key={budget.id}
                 name={budget.name}
-                amount={budget.amount}
+                amount={amount}
                 max={budget.max}
                 gray
               />
@@ -46,6 +53,11 @@ function App() {
           })}
         </div>
       </Container>
+      <AddExpensesModal
+        show={showTheModalExpenses}
+        handleClose={() => setShowTheModalExpenses(false)}
+        defaultButgetId="bb39a3fa-b891-4c5e-88af-6c3018c4c0d8"
+      />
       <AddBudgetModal show={showThemodalBudget} handleClose={() => setShotTheModalBudget(false)} />
     </>
   );

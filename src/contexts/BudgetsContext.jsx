@@ -22,10 +22,11 @@ export const BudgetsProvider = ({ children }) => {
   const [expenses, setExpenses] = useLocalStorage("expenses", []);
 
   function getBudgetExpenses(budgetId) {
-    return expenses.filter((expense) => expense.id === budgetId);
+    return expenses.filter((expense) => expense.budgetId === budgetId);
   }
 
   function addExpense({ description, amount, budgetId }) {
+    console.log(description, amount, budgetId);
     setExpenses((prevExpense) => {
       return [...prevExpense, { id: uuidV4(), description, amount, budgetId }];
     });
