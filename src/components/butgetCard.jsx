@@ -1,7 +1,7 @@
 import { Card, ProgressBar, Stack, Button } from "react-bootstrap";
 import { currencyFormat } from "../utils/utilis.js";
 const ButgetCard = (props) => {
-  const { name, amount, max, gray, modalExpense } = props;
+  const { name, amount, max, gray, modalExpense, modalDescription } = props;
 
   const className = [];
   if (parseInt(amount) > parseInt(max)) {
@@ -39,7 +39,14 @@ const ButgetCard = (props) => {
           >
             Add Expense
           </Button>
-          <Button variant="outline-secondary">View Expenses</Button>
+          <Button
+            variant="outline-secondary"
+            onClick={() => {
+              modalDescription();
+            }}
+          >
+            View Expenses
+          </Button>
         </Stack>
       </Card.Body>
     </Card>

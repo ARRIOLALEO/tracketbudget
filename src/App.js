@@ -6,13 +6,21 @@ import AddBudgetModal from "./components/AddBudgetModal.jsx";
 import { UNCATEGORIZE_BUDGET_ID, useBudgets } from "./contexts/BudgetsContext.jsx";
 import AddExpensesModal from "../src/components/AddExpensesModal.jsx";
 import UndefinedBudgetCard from "./components/undefinedBudgetCard.jsx";
+import ShowExpensesModal from "./components/showExpensesModal.jsx";
 function App() {
   const [showThemodalBudget, setShotTheModalBudget] = useState(false);
   const { budgets, getBudgetExpenses } = useBudgets();
   const [showTheModalExpenses, setShowTheModalExpenses] = useState(false);
+  const [showDescriptionModals, setShowDescriptionModals] = useState(false);
   const [budgetExpenseDefault, setbudgetExpenseDefault] = useState("");
+
   function showModalExpenses(id) {
     setShowTheModalExpenses(true);
+    setbudgetExpenseDefault(id);
+  }
+
+  function showModalExpensesDescription(id) {
+    setShowDescriptionModals(true);
     setbudgetExpenseDefault(id);
   }
   return (
@@ -55,6 +63,7 @@ function App() {
                 max={budget.max}
                 gray
                 modalExpense={() => showModalExpenses(budget.id)}
+                modalDescription={() => setShowDescriptionModals(true)}
               />
             );
           })}
@@ -65,7 +74,14 @@ function App() {
         handleClose={() => setShowTheModalExpenses(false)}
         defaultButgetId={budgetExpenseDefault}
       />
-      <UndefinedBudgetCard modalExpense={() => showModalExpenses(UNCATEGORIZE_BUDGET_ID)} />
+      <ShowExpensesModal
+        show={showDescriptionModals}
+        handleClose={() => setShowDescriptionModals(false)}
+      />
+      <UndefinedBudgetCard
+        modalExpense={() => showModalExpenses(UNCATEGORIZE_BUDGET_ID)}
+        budgetId={UNCATEGORIZE_BUDGET_ID}
+      />
       <AddBudgetModal show={showThemodalBudget} handleClose={() => setShotTheModalBudget(false)} />
     </>
   );
