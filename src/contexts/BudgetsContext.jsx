@@ -5,18 +5,7 @@ const BudgetsContext = React.createContext();
 export function useBudgets() {
   return useContext(BudgetsContext);
 }
-
-//{
-//id:
-//name:
-//max
-//}
-//{
-//id:
-//budgetId:
-//amount:
-//description
-//}
+export const UNCATEGORIZE_BUDGET_ID = "UNCATEGORIZE";
 export const BudgetsProvider = ({ children }) => {
   const [budgets, setButgets] = useLocalStorage("budgets", []);
   const [expenses, setExpenses] = useLocalStorage("expenses", []);
